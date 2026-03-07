@@ -107,7 +107,7 @@ Criterio “done”:
 
 ## Fase 7 — Qualità (refactor + robustezza)
 
-- [ ] Separa: parsing CLI / logica / storage.
+- [x] Separa: parsing CLI / logica / storage.
 - [ ] Centralizza validazione stati e parsing ID.
 - [ ] Output consistente (stesso formato per tutte le azioni).
 - [ ] Aggiungi exit code (opzionale) per errori vs successo.
