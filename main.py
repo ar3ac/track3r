@@ -33,7 +33,7 @@ def load_tasks():
 def write_tasks(tasks):
     try:
         with open("tasks.json", "w") as f:
-            json.dump(tasks, f)
+            json.dump(tasks, f, indent=4)
             f.close()
     except Exception as e:
         print(f"Error writing tasks to file: {e}")
@@ -105,6 +105,13 @@ def main():
         tasks_list = load_tasks()
         tasks_list.append(new_task)
         write_tasks(tasks_list)
+        # show the new task added with its id and description and the updated task list
+        print(f"Task added successfully with ID: {nuovo_id}")
+        print("Updated task list:")
+        for task in tasks_list:
+            print(
+                f"ID: {task['id']}, Description: {task['description']}, Status: {task['status']}"
+            )
     elif args.command == "update":
         pass
     elif args.command == "delete":

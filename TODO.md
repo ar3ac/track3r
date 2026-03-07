@@ -66,7 +66,7 @@ Criterio “done”:
 
 ## Fase 4 — Add + List (funzionalità base)
 
-- [ ] `add`: crea task con status `todo`, setta `createdAt`/`updatedAt`, salva.
+- [x] `add`: crea task con status `todo`, setta `createdAt`/`updatedAt`, salva.
 - [ ] `list`: stampa tutti i task in modo leggibile.
 - [ ] `list <status>`: filtra per stato.
 
