@@ -28,16 +28,16 @@ Criterio “done”:
 
 ## Fase 2 — CLI (parsing comandi)
 
-- [ ] Scegli approccio: `argparse` (consigliato) oppure `sys.argv`.
-- [ ] Definisci i comandi supportati:
+- [x] Scegli approccio: `argparse` (consigliato) oppure `sys.argv`.
+- [x] Definisci i comandi supportati:
   - `add "descrizione"`
   - `list [todo|in-progress|done]`
   - `update <id> "nuova descrizione"`
   - `delete <id>`
   - `mark-in-progress <id>`
   - `mark-done <id>`
-- [ ] Gestisci input non valido (messaggi chiari).
-- [ ] Crea lo “smistamento” comandi → funzioni (anche vuote per ora).
+- [x] Gestisci input non valido (messaggi chiari).
+- [x] Crea lo “smistamento” comandi → funzioni (anche vuote per ora).
 
 Criterio “done”:
 
@@ -55,8 +55,8 @@ Definisci struttura minima di un task (consigliata):
 - `createdAt` (timestamp/string)
 - `updatedAt` (timestamp/string)
 
-- [ ] Decide formato data/ora (ISO 8601 consigliato).
-- [ ] Definisci come generi ID: `max(id)+1` oppure contatore persistente.
+- [x] Decide formato data/ora (ISO 8601 consigliato).
+- [x] Definisci come generi ID: `max(id)+1` oppure contatore persistente.
 
 Criterio “done”:
 
