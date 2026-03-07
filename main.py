@@ -66,6 +66,9 @@ def main():
     # UPDATE
     parser_update = subparsers.add_parser("update", help="update a task")
     parser_update.add_argument("id", type=int, help="ID of the task to update")
+    parser_update.add_argument(
+        "text", help="new task description", nargs="+"
+    )  # new task description as a required argument
 
     # DELETE
     parser_delete = subparsers.add_parser("delete", help="delete a task")
@@ -98,7 +101,8 @@ def main():
 
         new_task = {
             "id": nuovo_id,
-            "description": args.text,
+            # add description by joining the list of words in args.text with spaces
+            "description": args.text[0] if len(args.text) == 1 else " ".join(args.text),
             "status": "todo",
             "created_at": now_iso(),  # This should be the current timestamp
             "updated_at": now_iso(),  # This should be the current timestamp
@@ -114,13 +118,44 @@ def main():
                 f"ID: {task['id']}, Description: {task['description']}, Status: {task['status']}"
             )
     elif args.command == "update":
-        pass
+        print("Update command selected. Task ID to update:", args.id)
+        # find the task with the provided id and update its description with the new text
+        task_to_update = next(
+            (task for task in tasks_list if task["id"] == args.id), None
+        )
+        if task_to_update:
+            task_to_update["description"] = " ".join(args.text)
+            task_to_update["updated_at"] = now_iso()
+            write_tasks(tasks_list)
+            print(f"Task with ID {args.id} updated successfully.")
+        else:
+            print(f"No task found with ID: {args.id}")
     elif args.command == "delete":
-        pass
+        print("Delete command selected. Task ID to delete:", args.id)
     elif args.command == "mark-in-progress":
-        pass
+        print("Mark in-progress command selected. Task ID to mark:", args.id)
+        task_to_update = next(
+            (task for task in tasks_list if task["id"] == args.id), None
+        )
+        if task_to_update:
+            task_to_update["status"] = "in-progress"
+            task_to_update["updated_at"] = now_iso()
+            write_tasks(tasks_list)
+            print(f"Task with ID {args.id} marked as in-progress.")
+        else:
+            print(f"No task found with ID: {args.id}")
     elif args.command == "mark-done":
-        pass
+        print("Mark done command selected. Task ID to mark:", args.id)
+        task_to_update = next(
+            (task for task in tasks_list if task["id"] == args.id), None
+        )
+        if task_to_update:
+            task_to_update["status"] = "done"
+            task_to_update["updated_at"] = now_iso()
+            write_tasks(tasks_list)
+            print(f"Task with ID {args.id} marked as done.")
+        else:
+            print(f"No task found with ID: {args.id}")
     # se il comando è list e non ha un filtro, mostra tutte le attività senza filtri e ben formattate
     elif args.command == "list" and not args.filter:
         # list all tasks without filters and well formatted
@@ -130,7 +165,7 @@ def main():
             return
         for task in tasks_list:
             print(
-                f"ID: {task['id']:2d}, status: {task['status']:10} - Description: {task['description']}"
+                f"ID: {task['id']:2d}, status: {task['status']:10} - updated at: {task['updated_at']} - Description: {task['description']}"
             )
     elif args.command == "list" and args.filter == "todo":
         # list only todo tasks
@@ -141,7 +176,7 @@ def main():
         for task in tasks_list:
             if task["status"] == "todo":
                 print(
-                    f"ID: {task['id']:2d}, status: {task['status']:10} - Description: {task['description']}"
+                    f"ID: {task['id']:2d}, status: {task['status']:12} - Description: {task['description']}"
                 )
     elif args.command == "list" and args.filter == "in-progress":
         # list only in-progress tasks

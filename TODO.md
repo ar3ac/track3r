@@ -83,10 +83,10 @@ Criterio “done”:
 
 ## Fase 5 — Update + Mark (modifica stato/testo)
 
-- [ ] `update <id> "testo"`: aggiorna description + `updatedAt`.
-- [ ] `mark-in-progress <id>`: aggiorna status + `updatedAt`.
-- [ ] `mark-done <id>`: aggiorna status + `updatedAt`.
-- [ ] Se ID non esiste → messaggio chiaro, nessuna modifica al file.
+- [x] `update <id> "testo"`: aggiorna description + `updatedAt`.
+- [x] `mark-in-progress <id>`: aggiorna status + `updatedAt`.
+- [x] `mark-done <id>`: aggiorna status + `updatedAt`.
+- [x] Se ID non esiste → messaggio chiaro, nessuna modifica al file.
 
 Criterio “done”:
 
