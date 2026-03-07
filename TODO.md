@@ -14,11 +14,11 @@ Obiettivo: costruire un Task Tracker da terminale che salva i task in `tasks.jso
 
 ## Fase 1 — Storage JSON (il “database”)
 
-- [ ] All’avvio, verifica se `tasks.json` esiste.
-- [ ] Se non esiste, crealo con contenuto iniziale: lista vuota.
-- [ ] Implementa lettura da JSON → lista Python.
-- [ ] Implementa scrittura lista Python → JSON (sovrascrive).
-- [ ] Gestisci errori: file vuoto/corrotto, permessi, JSON non valido.
+- [x] All’avvio, verifica se `tasks.json` esiste.
+- [x] Se non esiste, crealo con contenuto iniziale: lista vuota.
+- [x] Implementa lettura da JSON → lista Python.
+- [x] Implementa scrittura lista Python → JSON (sovrascrive).
+- [x] Gestisci errori: file vuoto/corrotto, permessi, JSON non valido.
 
 Criterio “done”:
 
