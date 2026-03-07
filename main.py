@@ -17,6 +17,7 @@ def check_tasks_file():
 
 
 def load_tasks():
+    check_tasks_file()
     try:
         with open("tasks.json", "r") as f:
             tasks = json.load(f)
@@ -120,20 +121,59 @@ def main():
         pass
     elif args.command == "mark-done":
         pass
-    elif args.command == "list" and not hasattr(args, "filtro"):
-        parser_list.print_help()
-    elif args.command == "list":
-        pass
+    # se il comando è list e non ha un filtro, mostra tutte le attività senza filtri e ben formattate
+    elif args.command == "list" and not args.filter:
+        # list all tasks without filters and well formatted
+        print("All tasks:")
+        if len(tasks_list) == 0:
+            print("No tasks found.")
+            return
+        for task in tasks_list:
+            print(
+                f"ID: {task['id']:2d}, status: {task['status']:10} - Description: {task['description']}"
+            )
+    elif args.command == "list" and args.filter == "todo":
+        # list only todo tasks
+        print("Todo tasks:")
+        if len(tasks_list) == 0:
+            print("No todo tasks found.")
+            return
+        for task in tasks_list:
+            if task["status"] == "todo":
+                print(
+                    f"ID: {task['id']:2d}, status: {task['status']:10} - Description: {task['description']}"
+                )
+    elif args.command == "list" and args.filter == "in-progress":
+        # list only in-progress tasks
+        print("In-progress tasks:")
+        if len(tasks_list) == 0:
+            print("No in-progress tasks found.")
+            return
+        for task in tasks_list:
+            if task["status"] == "in-progress":
+                print(
+                    f"ID: {task['id']:2d}, status: {task['status']:10} - Description: {task['description']}"
+                )
+    elif args.command == "list" and args.filter == "done":
+        # list only done tasks
+        print("Done tasks:")
+        if len(tasks_list) == 0:
+            print("No done tasks found.")
+            return
+        for task in tasks_list:
+            if task["status"] == "done":
+                print(
+                    f"ID: {task['id']:2d}, status: {task['status']:10} - Description: {task['description']}"
+                )
     else:
         print(parser.print_help())
 
-    check_tasks_file()
-    print("Welcome to the task3r:")
+    # print("Welcome to the task3r:")
 
-    print(len(tasks_list))
-    print(tasks_list)
-    print(now_iso())
-    write_tasks(tasks_list)
+    # print(len(tasks_list))
+    # print(tasks_list)
+    # print(now_iso())
+    # write_tasks(tasks_list)
 
 
 if __name__ == "__main__":

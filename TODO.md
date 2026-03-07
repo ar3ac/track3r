@@ -67,13 +67,13 @@ Criterio “done”:
 ## Fase 4 — Add + List (funzionalità base)
 
 - [x] `add`: crea task con status `todo`, setta `createdAt`/`updatedAt`, salva.
-- [ ] `list`: stampa tutti i task in modo leggibile.
-- [ ] `list <status>`: filtra per stato.
+- [x] `list`: stampa tutti i task in modo leggibile.
+- [x] `list <status>`: filtra per stato.
 
 Edge cases:
 
-- [ ] `add` con descrizione vuota → rifiuta.
-- [ ] `list` con file vuoto → stampa “nessun task”.
+- [x] `add` con descrizione vuota → rifiuta.
+- [x] `list` con file vuoto → stampa “nessun task”.
 
 Criterio “done”:
 
