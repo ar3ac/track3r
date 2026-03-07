@@ -96,8 +96,8 @@ Criterio “done”:
 
 ## Fase 6 — Delete
 
-- [ ] `delete <id>`: rimuovi task dalla lista e salva.
-- [ ] ID non esiste → messaggio chiaro.
+- [x] `delete <id>`: rimuovi task dalla lista e salva.
+- [x] ID non esiste → messaggio chiaro.
 
 Criterio “done”:
 

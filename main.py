@@ -132,6 +132,16 @@ def main():
             print(f"No task found with ID: {args.id}")
     elif args.command == "delete":
         print("Delete command selected. Task ID to delete:", args.id)
+        # find the task with the provided id and delete it from the tasks list
+        task_to_delete = next(
+            (task for task in tasks_list if task["id"] == args.id), None
+        )
+        if task_to_delete:
+            tasks_list.remove(task_to_delete)
+            write_tasks(tasks_list)
+            print(f"Task with ID {args.id} deleted successfully.")
+        else:
+            print(f"No task found with ID: {args.id}")
     elif args.command == "mark-in-progress":
         print("Mark in-progress command selected. Task ID to mark:", args.id)
         task_to_update = next(
@@ -165,7 +175,7 @@ def main():
             return
         for task in tasks_list:
             print(
-                f"ID: {task['id']:2d}, status: {task['status']:10} - updated at: {task['updated_at']} - Description: {task['description']}"
+                f"ID: {task['id']:2d}, status: {task['status']:12} - updated at: {task['updated_at']} - Description: {task['description']}"
             )
     elif args.command == "list" and args.filter == "todo":
         # list only todo tasks
