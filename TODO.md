@@ -6,9 +6,9 @@ Obiettivo: costruire un Task Tracker da terminale che salva i task in `tasks.jso
 
 ## Fase 0 — Setup progetto
 
-- [ ] Crea repo Git (opzionale ma consigliato) e cartella progetto.
-- [ ] Crea `todo.md` (questo file), `README.md` (vuoto per ora) e `tasks.json` (se vuoi crearlo a mano).
-- [ ] Definisci convenzioni: nomi comandi, stati validi (`todo`, `in-progress`, `done`), formato date.
+- [x] Crea repo Git (opzionale ma consigliato) e cartella progetto.
+- [x] Crea `todo.md` (questo file), `README.md` (vuoto per ora) e `tasks.json` (se vuoi crearlo a mano).
+- [x] Definisci convenzioni: nomi comandi, stati validi (`todo`, `in-progress`, `done`), formato date.
 
 ---
 
