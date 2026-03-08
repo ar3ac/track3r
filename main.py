@@ -2,6 +2,7 @@
 import argparse
 from task_manager import TaskManager, TaskNotFoundError
 from constants import VALID_STATUSES
+import view
 
 
 def main():
@@ -55,33 +56,29 @@ def main():
         # Handle commands
         if args.command == "add":
             new_task = manager.add_task(" ".join(args.text))
-            print(f"Added task with id {new_task['id']} : {new_task['description']}")
+            view.display_success(
+                f"Task {new_task['id']} created: {new_task['description']}"
+            )
         elif args.command == "list":
             tasks = manager.list_tasks(args.status)
-            print(f"Tasks ({args.status if args.status else 'all'}):")
-            if not tasks:
-                print("No tasks to show.")
-            for task in tasks:
-                print(
-                    f"ID: {task['id']:2d}, Status: {task['status']:12} - {task['description']}"
-                )
+            view.display_tasks_table(tasks)
         elif args.command == "update":
             manager.update_task(args.id, " ".join(args.text))
-            print(f"Task with ID {args.id} updated successfully.")
+            view.display_success(f"Task {args.id} updated.")
         elif args.command == "mark-in-progress":
             manager.mark_in_progress(args.id)
-            print(f"Task with ID {args.id} marked as in-progress.")
+            view.display_success(f"Task {args.id} set to in-progress.")
         elif args.command == "mark-done":
             manager.mark_done(args.id)
-            print(f"Task with ID {args.id} marked as done.")
+            view.display_success(f"Task {args.id} set to done.")
         elif args.command == "delete":
             manager.delete_task(args.id)
-            print(f"Task with ID {args.id} deleted successfully.")
+            view.display_success(f"Task {args.id} deleted.")
         else:
             # This handles the case where no command is provided
             parser.print_help()
     except TaskNotFoundError as e:
-        print(f"Error: {e}")
+        view.display_error(str(e))
 
 
 if __name__ == "__main__":
