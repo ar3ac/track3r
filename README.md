@@ -3,6 +3,7 @@
 `track3r` is a simple yet powerful command-line tool to manage your daily tasks. It features a clean, colorful, and modern interface, making task management from the terminal a pleasant experience.
 
 > This project is inspired by the Task Tracker project from roadmap.sh.
+> https://roadmap.sh/projects/task-tracker
 
 ### Demo
 
