@@ -1,7 +1,7 @@
 # check if tasks.json exists, if not create it
 import argparse
-from storage import load_tasks, write_tasks
-from task_manager import TaskManager
+from task_manager import TaskManager, TaskNotFoundError
+from constants import VALID_STATUSES
 
 
 def main():
@@ -20,12 +20,12 @@ def main():
     parser_list = subparsers.add_parser(
         "list", help="Show tasks ( with optional filters : todo, in-progress, done )"
     )
-    list_subparsers = parser_list.add_subparsers(dest="filter", help="Filter to apply")
-
-    # list subcommands
-    list_subparsers.add_parser("todo", help="Show only todos to do")
-    list_subparsers.add_parser("in-progress", help="Show only todos in progress")
-    list_subparsers.add_parser("done", help="Show only completed todos")
+    parser_list.add_argument(
+        "status",
+        nargs="?",
+        choices=VALID_STATUSES,
+        help="Filter tasks by status",
+    )
 
     # UPDATE
     parser_update = subparsers.add_parser("update", help="update a task")
@@ -51,45 +51,37 @@ def main():
     args = parser.parse_args()
 
     manager = TaskManager()
-    # Handle commands
-    # add: add a new task with the provided text
-    if args.command == "add":
-        # print("Add command selected. Task description:", " ".join(args.text))
-        new_task = manager.add_task(" ".join(args.text))
-        print(f"Added task with id {new_task['id']} : {new_task['description']}")
-    elif args.command == "list":
-        tasks = manager.list_tasks(args.filter)
-        print(f"Tasks ({args.filter if args.filter else 'all'}):")
-        for task in tasks:
-            print(
-                f"ID: {task['id']:2d}, Status: {task['status']:12} - {task['description']}"
-            )
-    elif args.command == "update":
-        task_updated = manager.update_task(args.id, " ".join(args.text))
-        if task_updated:
+    try:
+        # Handle commands
+        if args.command == "add":
+            new_task = manager.add_task(" ".join(args.text))
+            print(f"Added task with id {new_task['id']} : {new_task['description']}")
+        elif args.command == "list":
+            tasks = manager.list_tasks(args.status)
+            print(f"Tasks ({args.status if args.status else 'all'}):")
+            if not tasks:
+                print("No tasks to show.")
+            for task in tasks:
+                print(
+                    f"ID: {task['id']:2d}, Status: {task['status']:12} - {task['description']}"
+                )
+        elif args.command == "update":
+            manager.update_task(args.id, " ".join(args.text))
             print(f"Task with ID {args.id} updated successfully.")
-        else:
-            print(f"No task found with ID: {args.id}")
-    elif args.command == "mark-in-progress":
-        task_updated = manager.mark_in_progress(args.id)
-        if task_updated:
+        elif args.command == "mark-in-progress":
+            manager.mark_in_progress(args.id)
             print(f"Task with ID {args.id} marked as in-progress.")
-        else:
-            print(f"No task found with ID: {args.id}")
-    elif args.command == "mark-done":
-        task_updated = manager.mark_done(args.id)
-        if task_updated:
+        elif args.command == "mark-done":
+            manager.mark_done(args.id)
             print(f"Task with ID {args.id} marked as done.")
-        else:
-            print(f"No task found with ID: {args.id}")
-    elif args.command == "delete":
-        task_deleted = manager.delete_task(args.id)
-        if task_deleted:
+        elif args.command == "delete":
+            manager.delete_task(args.id)
             print(f"Task with ID {args.id} deleted successfully.")
         else:
-            print(f"No task found with ID: {args.id}")
-    else:
-        print(parser.print_help())
+            # This handles the case where no command is provided
+            parser.print_help()
+    except TaskNotFoundError as e:
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":

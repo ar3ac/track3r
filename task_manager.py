@@ -1,6 +1,11 @@
 from storage import load_tasks, write_tasks
 from datetime import datetime
+from constants import DEFAULT_STATUS, VALID_STATUSES, STATUS_IN_PROGRESS, STATUS_DONE
 
+
+class TaskNotFoundError(Exception):
+    """Custom exception for when a task is not found."""
+    pass
 
 class TaskManager:
     def __init__(self):
@@ -10,7 +15,10 @@ class TaskManager:
         return datetime.now().isoformat() + "Z"  # Adding 'Z' to indicate UTC time
 
     def get_task(self, task_id):
-        return next((task for task in self.tasks_list if task["id"] == task_id), None)
+        task = next((task for task in self.tasks_list if task["id"] == task_id), None)
+        if task is None:
+            raise TaskNotFoundError(f"No task found with ID: {task_id}")
+        return task
 
     def add_task(self, description):
         if not description:
@@ -22,7 +30,7 @@ class TaskManager:
         new_task = {
             "id": nuovo_id,
             "description": description,
-            "status": "todo",
+            "status": DEFAULT_STATUS,
             "created_at": self.now_iso(),
             "updated_at": self.now_iso(),
         }
@@ -31,41 +39,36 @@ class TaskManager:
         return new_task
 
     def list_tasks(self, status_filter=None):
+        if status_filter and status_filter not in VALID_STATUSES:
+            return []  # O potremmo sollevare un errore, ma per ora va bene così
         if status_filter:
             return [task for task in self.tasks_list if task["status"] == status_filter]
         return self.tasks_list
 
     def update_task(self, task_id, new_description):
-        task_to_update = self.get_task(task_id)
-        if task_to_update:
-            task_to_update["description"] = new_description
-            task_to_update["updated_at"] = self.now_iso()
-            write_tasks(self.tasks_list)
-            return True
-        return False
+        task = self.get_task(task_id)  # This will raise TaskNotFoundError if not found
+        task["description"] = new_description
+        task["updated_at"] = self.now_iso()
+        write_tasks(self.tasks_list)
+        return task
 
     def mark_in_progress(self, task_id):
-        task_to_update = self.get_task(task_id)
-        if task_to_update:
-            task_to_update["status"] = "in-progress"
-            task_to_update["updated_at"] = self.now_iso()
-            write_tasks(self.tasks_list)
-            return True
-        return False
+        task = self.get_task(task_id)
+        task["status"] = STATUS_IN_PROGRESS
+        task["updated_at"] = self.now_iso()
+        write_tasks(self.tasks_list)
+        return task
 
     def mark_done(self, task_id):
-        task_to_update = self.get_task(task_id)
-        if task_to_update:
-            task_to_update["status"] = "done"
-            task_to_update["updated_at"] = self.now_iso()
-            write_tasks(self.tasks_list)
-            return True
-        return False
+        task = self.get_task(task_id)
+        task["status"] = STATUS_DONE
+        task["updated_at"] = self.now_iso()
+        write_tasks(self.tasks_list)
+        return task
 
     def delete_task(self, task_id):
         task_to_delete = self.get_task(task_id)
-        if task_to_delete:
-            self.tasks_list.remove(task_to_delete)
-            write_tasks(self.tasks_list)
-            return True
-        return False
+        self.tasks_list.remove(task_to_delete)
+        write_tasks(self.tasks_list)
+        # For delete, returning True on success is fine
+        return True
