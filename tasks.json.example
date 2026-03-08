@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "description": "Welcome to track3r! This is an example task.",
+    "status": "todo",
+    "created_at": "2023-10-27T10:00:00.000000Z",
+    "updated_at": "2023-10-27T10:00:00.000000Z"
+  }
+]
