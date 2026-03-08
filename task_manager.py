@@ -22,7 +22,7 @@ class TaskManager:
 
     def add_task(self, description):
         if not description:
-            return None
+            raise ValueError("Task description cannot be empty.")
         if self.tasks_list:
             nuovo_id = max(task["id"] for task in self.tasks_list) + 1
         else:

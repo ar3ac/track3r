@@ -110,7 +110,7 @@ Criterio “done”:
 - [x] Separa: parsing CLI / logica / storage.
 - [x] Centralizza validazione stati e parsing ID.
 - [x] Output consistente (stesso formato per tutte le azioni).
-- [ ] Aggiungi exit code (opzionale) per errori vs successo.
+- [x] Aggiungi exit code (opzionale) per errori vs successo.
 
 ---
 

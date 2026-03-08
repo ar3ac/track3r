@@ -2,6 +2,7 @@
 import argparse
 from task_manager import TaskManager, TaskNotFoundError
 from constants import VALID_STATUSES
+import sys
 import view
 
 
@@ -77,8 +78,12 @@ def main():
         else:
             # This handles the case where no command is provided
             parser.print_help()
+    except ValueError as e:
+        view.display_error(str(e))
+        sys.exit(1)
     except TaskNotFoundError as e:
         view.display_error(str(e))
+        sys.exit(1)
 
 
 if __name__ == "__main__":
