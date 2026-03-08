@@ -11,23 +11,18 @@ def check_tasks_file():
 
 def load_tasks():
     check_tasks_file()
-    tasks = []
     try:
         with open("tasks.json", "r") as f:
-            tasks = json.load(f)
+            content = f.read()
+            if not content:
+                return []
+            return json.loads(content)
     except FileNotFoundError:
-        print("File non trovato!")
+        return []
     except json.JSONDecodeError:
-        print("File JSON corrotto o malformato!")
-    except Exception as e:
-        print(f"Errore generico: {e}")
-    return tasks
+        raise ValueError("The tasks.json file is corrupted and cannot be read.")
 
 
 def write_tasks(tasks):
-    try:
-        with open("tasks.json", "w") as f:
-            json.dump(tasks, f, indent=4)
-            f.close()
-    except Exception as e:
-        print(f"Error writing tasks to file: {e}")
+    with open("tasks.json", "w") as f:
+        json.dump(tasks, f, indent=4)
