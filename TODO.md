@@ -116,9 +116,9 @@ Criterio “done”:
 
 ## Fase 8 — README (portfolio-ready)
 
-- [ ] Descrivi requisiti, comandi, esempi d’uso.
-- [ ] Documenta formato `tasks.json`.
-- [ ] Aggiungi “Roadmap / Next steps” (feature future).
+- [x] Descrivi requisiti, comandi, esempi d’uso.
+- [x] Documenta formato `tasks.json`.
+- [x] Aggiungi “Roadmap / Next steps” (feature future).
 
 ---
 
